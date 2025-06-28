@@ -1,0 +1,23 @@
+package dev.saransh.springbootapp_backend.models;
+
+
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+import org.springframework.stereotype.Service;
+
+@Getter
+@Setter
+@NoArgsConstructor
+@AllArgsConstructor
+public class Product {
+
+    private int id;
+    private String title;
+    private String description;
+    private double price;
+    private String imageURL;
+    private Category category;
+
+}
