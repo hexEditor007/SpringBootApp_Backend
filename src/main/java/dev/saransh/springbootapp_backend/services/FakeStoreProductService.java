@@ -24,9 +24,8 @@ public class FakeStoreProductService implements ProductService {
     public List<Product> getAllProducts() {
         ResponseEntity<WrapperForFakeStoreProductService> responseEntity = restTemplate.exchange("https://fakestoreapi.com/products", HttpMethod.GET,null, WrapperForFakeStoreProductService.class);
         WrapperForFakeStoreProductService ad =  responseEntity.getBody();
-//        List<FakeStoreProductDto> list = responseEntity.getBody().getData();
         return ad.toProductList();
-//        return list;
+
     }
 
     @Override
