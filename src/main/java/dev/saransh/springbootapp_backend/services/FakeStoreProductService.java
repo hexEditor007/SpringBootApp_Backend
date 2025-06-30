@@ -22,26 +22,40 @@ public class FakeStoreProductService implements ProductService {
     }
     @Override
     public List<Product> getAllProducts() {
-        ResponseEntity<List<FakeStoreProductDto>> responseEntity = restTemplate.exchange("https://fakestoreapi.com/products", HttpMethod.GET,null, new ParameterizedTypeReference<List<FakeStoreProductDto>>() {});
-//        WrapperForFakeStoreProductService ad =  responseEntity.getBody();
-        List<FakeStoreProductDto> list = responseEntity.getBody();
+//        FakeStoreProductDto[] array = restTemplate.getForObject("https://fakestoreapi.com/products", FakeStoreProductDto[].class);
+        ResponseEntity<FakeStoreProductDto[]> responseEntity = restTemplate.getForEntity("https://fakestoreapi.com/products", FakeStoreProductDto[].class);
+        FakeStoreProductDto[] array = responseEntity.getBody();
+
         List<Product> newList = new ArrayList<>();
-        for (FakeStoreProductDto fakeStoreProductDto : list) {
+        for (FakeStoreProductDto fakeStoreProductDto : array) {
             newList.add(fakeStoreProductDto.toProduct());
         }
-//        System.out.println(list);
         return newList;
 
     }
 
     @Override
     public Product getSingleProduct(long id) {
-        FakeStoreProductDto fakeStoreProductDto = restTemplate.getForObject("https://fakestoreapi.com/products/" + id, FakeStoreProductDto.class);
+//        FakeStoreProductDto fakeStoreProductDto = restTemplate.getForObject("https://fakestoreapi.com/products/" + id, FakeStoreProductDto.class);
+        ResponseEntity<FakeStoreProductDto> responseEntity = restTemplate.getForEntity("https://fakestoreapi.com/products/" + id, FakeStoreProductDto.class);
+        FakeStoreProductDto fakeStoreProductDto = responseEntity.getBody();
+
+        if(fakeStoreProductDto == null){
+            return null;
+        }
         return fakeStoreProductDto.toProduct();
     }
 
     @Override
-    public Product createProduct(ProductRequestDto productRequestDto) {
-        return null;
+    public Product createProduct(String title, String description, String imageURL, String category, double price) {
+        FakeStoreProductDto fakeStoreProductDto = new FakeStoreProductDto();
+        fakeStoreProductDto.setTitle(title);
+        fakeStoreProductDto.setDescription(description);
+        fakeStoreProductDto.setImage(imageURL);
+        fakeStoreProductDto.setCategory(category);
+        fakeStoreProductDto.setPrice(price);
+
+        FakeStoreProductDto fakeStoreProductDtoNew = restTemplate.postForObject("https://fakestoreapi.com/products", fakeStoreProductDto, FakeStoreProductDto.class);
+        return fakeStoreProductDtoNew.toProduct();
     }
 }

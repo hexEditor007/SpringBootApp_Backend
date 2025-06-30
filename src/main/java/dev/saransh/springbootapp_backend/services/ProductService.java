@@ -10,6 +10,7 @@ public interface ProductService {
 
     List<Product> getAllProducts();
     Product getSingleProduct(long id);
-    Product createProduct(ProductRequestDto productRequestDto);
+    Product createProduct(String title, String description, String imageURL, String category, double price);
+
 
 }
