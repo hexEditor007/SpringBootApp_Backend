@@ -2,6 +2,7 @@ package dev.saransh.springbootapp_backend.services;
 
 import dev.saransh.springbootapp_backend.dtos.FakeStoreProductDto;
 import dev.saransh.springbootapp_backend.dtos.ProductRequestDto;
+import dev.saransh.springbootapp_backend.exceptions.ProductNotFoundException;
 import dev.saransh.springbootapp_backend.models.Product;
 import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.http.HttpMethod;
@@ -35,13 +36,13 @@ public class FakeStoreProductService implements ProductService {
     }
 
     @Override
-    public Product getSingleProduct(long id) {
+    public Product getSingleProduct(long id) throws ProductNotFoundException {
 //        FakeStoreProductDto fakeStoreProductDto = restTemplate.getForObject("https://fakestoreapi.com/products/" + id, FakeStoreProductDto.class);
         ResponseEntity<FakeStoreProductDto> responseEntity = restTemplate.getForEntity("https://fakestoreapi.com/products/" + id, FakeStoreProductDto.class);
         FakeStoreProductDto fakeStoreProductDto = responseEntity.getBody();
 
         if(fakeStoreProductDto == null){
-            return null;
+            throw new ProductNotFoundException("Product with id " + id + " is not present with the service. Its an invalid Id");
         }
         return fakeStoreProductDto.toProduct();
     }
