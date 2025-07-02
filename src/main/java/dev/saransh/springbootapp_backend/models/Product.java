@@ -11,9 +11,8 @@ import org.springframework.stereotype.Service;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-public class Product {
+public class Product extends BaseModel {
 
-    private int id;
     private String title;
     private String description;
     private String imageURL;
