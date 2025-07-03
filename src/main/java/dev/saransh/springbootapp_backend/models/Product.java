@@ -1,7 +1,10 @@
 package dev.saransh.springbootapp_backend.models;
 
 
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
+import jakarta.persistence.ManyToOne;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -18,7 +21,11 @@ public class Product extends BaseModel {
     private String title;
     private String description;
     private String imageURL;
-//    private Category category;
+
+    @ManyToOne(cascade = {CascadeType.PERSIST})
+    // This means if a new product is added in Products Table with a category that doesn't yet exist in the Category Table,
+    // add that category in the Category Table.
+    private Category category;
     private double price;
 
 }
