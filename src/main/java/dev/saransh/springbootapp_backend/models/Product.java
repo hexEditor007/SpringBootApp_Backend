@@ -23,9 +23,9 @@ public class Product extends BaseModel {
     private String imageURL;
 
     @ManyToOne(cascade = {CascadeType.PERSIST})
+    private Category category;
     // This means if a new product is added in Products Table with a category that doesn't yet exist in the Category Table,
     // add that category in the Category Table.
-    private Category category;
     private double price;
 
 }

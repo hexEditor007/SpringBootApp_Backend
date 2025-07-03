@@ -15,7 +15,7 @@ public class Category extends BaseModel {
     private String title;
 
     @OneToMany(mappedBy = "category", cascade = {CascadeType.REMOVE})
-            // It means if any category is deleted in Category table,
-            // delete all the associated product that is referring to this category in the Products Table.
     List<Product> products;
+    // It means if any category is deleted in Category table,
+    // delete all the associated product that is referring to this category in the Products Table.
 }

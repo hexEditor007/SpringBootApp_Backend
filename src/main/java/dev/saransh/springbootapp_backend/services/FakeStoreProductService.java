@@ -4,6 +4,7 @@ import dev.saransh.springbootapp_backend.dtos.FakeStoreProductDto;
 import dev.saransh.springbootapp_backend.dtos.ProductRequestDto;
 import dev.saransh.springbootapp_backend.exceptions.ProductNotFoundException;
 import dev.saransh.springbootapp_backend.models.Product;
+import org.springframework.context.annotation.Primary;
 import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.ResponseEntity;
@@ -13,7 +14,7 @@ import org.springframework.web.client.RestTemplate;
 import java.util.ArrayList;
 import java.util.List;
 
-@Service
+@Service("fakeStoreProductService")
 public class FakeStoreProductService implements ProductService {
 
     private RestTemplate restTemplate;
