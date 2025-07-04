@@ -9,6 +9,7 @@ import org.springframework.context.annotation.Primary;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service("selfProductService")
 public class SelfProductService implements ProductService {
@@ -31,12 +32,16 @@ public class SelfProductService implements ProductService {
 
     @Override
     public List<Product> getAllProducts() {
-        return List.of();
+        return productRepository.findAll();
     }
 
     @Override
     public Product getSingleProduct(long id) throws ProductNotFoundException {
-        return null;
+        Optional<Product> optional = productRepository.findById(id);
+        if(optional.isEmpty()){
+            throw new ProductNotFoundException("Product with id " + id + " is not present.");
+        }
+        return optional.get();
     }
 
     @Override

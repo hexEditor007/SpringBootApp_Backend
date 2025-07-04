@@ -29,16 +29,15 @@ public class ProductController {
     }
 
     @GetMapping("/products/{id}")
-    public ResponseEntity<Product> getSingleProduct(@PathVariable("id") long id) throws ProductNotFoundException {
+    public Product getSingleProduct(@PathVariable("id") long id) throws ProductNotFoundException {
         Product p =  productService.getSingleProduct(id);
-        ResponseEntity<Product> responseEntity;
-        if(p == null){
-            responseEntity  = new ResponseEntity<>(p, HttpStatus.NOT_FOUND);
-        } else {
-            responseEntity  = new ResponseEntity<>(p, HttpStatus.OK);
-        }
-
-        return responseEntity;
+//        ResponseEntity<Product> responseEntity = new ResponseEntity<>(p, HttpStatus.OK);
+//        if(p == null){
+//            responseEntity  = new ResponseEntity<>(p, HttpStatus.NOT_FOUND);
+//        } else {
+//            responseEntity  = new ResponseEntity<>(p, HttpStatus.OK);
+//        }
+        return p;
     }
 
     @PostMapping("/products")
