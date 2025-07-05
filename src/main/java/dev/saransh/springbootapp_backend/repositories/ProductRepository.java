@@ -5,10 +5,13 @@ import dev.saransh.springbootapp_backend.models.Product;
 import dev.saransh.springbootapp_backend.projections.ProductProjection;
 import org.springframework.data.domain.Limit;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
+
+import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
@@ -31,6 +34,26 @@ public interface ProductRepository extends JpaRepository<Product,Long> {
     List<Product> findByTitleStartingWith(String startingWith);
 
     List<Product> findByTitleStartingWithAndIdEquals(String startingWith, long id);
+
+    List<Product> findByName(String name);
+
+    void deleteById(Long id);
+
+    void deleteAll();
+
+    Long deleteByName(String name);
+
+    void deleteByCategoryName(String categoryName);
+
+    void deleteByCategoryTitle(String categoryTitle);
+
+    @Modifying
+    @Query("delete from Product p where p.id = :categoryId")
+    void deleteProductWhereIdMatchesCategoryId(@Param("categoryId") Long categoryId);
+
+    @Modifying
+    @Query("delete from Product p where p.createdAt < :retainDate")
+    int retainProductsAfter(@Param("retainDate") Date retainDate);
 
     //Hibernate Query Language(HQL)
     // Treat variables as parameters inside class and not columns in table
